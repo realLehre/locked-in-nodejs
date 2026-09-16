@@ -1,12 +1,12 @@
-import os from 'os'
-import {readFileSync} from 'fs'
-import {PDFParse} from 'pdf-parse'
+import {readFile} from 'fs'
 
-
-async function run() {
-    const parse = new PDFParse({url:'the_cold_war.pdf'})
-    const result  = await parse.getInfo()
-    console.log(result)
-}
-
-run()
+console.log('started')
+readFile('./file/test.txt', 'utf8',(err, data) => {
+    if(err) {
+        console.log('error', err)
+        return;
+    }
+    console.log('file data', data)
+    console.log('done reading file')
+})
+console.log('ended')
