@@ -1,28 +1,9 @@
-import http from 'http'
-import {readFile, readFileSync} from 'fs'
+import express from 'express'
 
-const server = http.createServer((req, res) => {
-    const url = req.url;
+import router from './routes/routes.js'
 
-    switch (url) {
-        case '/about':
-            readHtml('./webpages/about.html', res)
+const app = express();
 
-            break
-        case '/not-found':
-            readHtml('./webpages/pagenotfound.html', res)
+app.use('/', router)
 
-            break;
-        default:
-            readHtml('./webpages/index.html', res)
-    }
-})
-
-const readHtml = (path, res) => {
-    return readFile(path, 'utf-8', (error, data) => {
-        res.write(data)
-        res.end()
-    })
-}
-
-server.listen(5000)
+app.listen(5000)
