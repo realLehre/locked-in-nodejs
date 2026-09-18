@@ -18,6 +18,8 @@ router.get('/', async (req, res) => {
 router.get('/about', async (req, res) => {
     // const html = await getHtml('./webpages/about.html')
     // res.send(html)
+    console.log('fileulr', __fileUrl)
+    console.log('dirname', __dirName)
     res.sendFile(path.join(__dirName, '../webpages/about.html'))
 })
 
