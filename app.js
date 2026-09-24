@@ -2,6 +2,7 @@ import express from "express";
 import 'dotenv/config'
 
 import taskRoutes from "./task-manager/tasks-routes/routes.js";
+import jwtRoutes from "./JWT_Project/jwt-routes/jwt-routes.js";
 import notFound from "./task-manager/taskMiddlewares/task-route-not-found.js";
 import './task-manager/taskDb/connection.js'
 import connectToDb from "./task-manager/taskDb/connection.js";
@@ -11,6 +12,7 @@ const app = express()
 app.use(express.json());
 
 app.use('/api/v1/tasks', taskRoutes)
+app.use('/api/v1/jwt', jwtRoutes)
 app.use(notFound)
 app.use(errorHandler)
 
