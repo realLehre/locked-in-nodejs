@@ -2,6 +2,7 @@ import express from "express";
 import 'dotenv/config'
 
 import jobRoutes from './job-board/job-board-routes/jobs-routes.js'
+import userRoutes from "./job-board/job-board-routes/user-routes.js";
 import notFound from "./task-manager/taskMiddlewares/task-route-not-found.js";
 import './task-manager/taskDb/connection.js'
 import connectToDb from "./task-manager/taskDb/connection.js";
@@ -11,6 +12,7 @@ const app = express()
 app.use(express.json());
 
 app.use('/api/v1/jobs', jobRoutes)
+app.use('/api/v1/users', userRoutes)
 app.use(notFound)
 app.use(errorHandler)
 

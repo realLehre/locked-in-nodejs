@@ -35,7 +35,7 @@ const editJobService = async (data, id) => {
         {$set: data},
         {returnDocument: 'after'}
     )
-    
+
     if(!job) {
         throw new NotFound('Job not found')
     }
