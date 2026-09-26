@@ -8,14 +8,8 @@ const getUsersService = async () => {
     return await User.find()
 }
 
-const create = async (data) => {
-    const user = await User.create(data)
-    console.log(user)
-    return user
-}
-
 const getSingleUser = async (id) => {
-    const user = await User.findById(id)
+    const user = await User.findById(id).select('-password')
 
     if(!user) {
         throw new NotFound('User not found')
@@ -56,7 +50,6 @@ const editUserService = async (data, id) => {
 
 export {
     getUsersService,
-    create,
     getSingleUser,
     deleteUserService,
     editUserService

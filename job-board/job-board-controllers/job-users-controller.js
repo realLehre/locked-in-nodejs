@@ -1,6 +1,6 @@
 import asyncWrapper from "../../utils/asyncHandler.js";
 
-import { create, getSingleUser, getUsersService, deleteUserService, editUserService } from '../job-board-services/job-users-service.js'
+import { getSingleUser, getUsersService, deleteUserService, editUserService } from '../job-board-services/job-users-service.js'
 import {success} from "../../utils/response-body.js";
 import {deleteJobService, editJobService, findJobService} from "../job-board-services/jobs-service.js";
 import NotFound from "../../errors/not-found.js";
@@ -9,14 +9,6 @@ const getUsers = asyncWrapper(async (req, res) => {
     const users = await getUsersService();
 
     success(res, users);
-})
-
-const createUser = asyncWrapper(async (req, res) => {
-    const data = req.body;
-
-    const user  = await create(data)
-
-    success(res, user, 201)
 })
 
 const getUser = asyncWrapper(async (req, res) => {
@@ -44,7 +36,6 @@ const deleteUser = asyncWrapper(async (req, res) => {
 })
 
 export {
-    createUser,
     getUser,
     getUsers,
     deleteUser,
