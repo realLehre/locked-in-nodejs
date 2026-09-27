@@ -24,8 +24,6 @@ const createOtp = async ({email, userId, purpose, name}) => {
 
     const emailT = await sendEmail({email, purpose, name, otp: otpRaw})
 
-    console.log('email sent', emailT);
-
     return otp;
 }
 

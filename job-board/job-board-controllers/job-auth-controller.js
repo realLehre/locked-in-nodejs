@@ -45,8 +45,7 @@ const loginUser = asyncWrapper(async (req, res) => {
 
     const purpose = OtpTypes.LOGIN;
 
-   const otp = await createOtp({email, userId: user._id, purpose, name: user.name});
-    console.log(otp)
+   await createOtp({email, userId: user._id, purpose, name: user.name});
 
     const token = user.genJWT();
     const refreshToken = user.genAccessToken();
