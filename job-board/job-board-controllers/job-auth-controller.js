@@ -41,12 +41,14 @@ const loginUser = asyncWrapper(async (req, res) => {
     }
 
     const token = user.genJWT();
+    const refreshToken = user.genAccessToken();
     const userData = {
         user: {
             name: user.name,
             email: user.email
         },
-        token
+        token,
+        refreshToken
     }
 
     success(res, userData, StatusCodes.OK)

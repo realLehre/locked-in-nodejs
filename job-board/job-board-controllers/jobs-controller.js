@@ -16,10 +16,8 @@ const getJobs = asyncWrapper(async (req, res) => {
 })
 
 const createJob = asyncWrapper(async (req, res) => {
-    const data = req.body;
-
-    const job  = await createJobService(data)
-
+    req.body.createdBy = req.user.userId;
+    const job  = await createJobService(req.body)
     success(res, job, 201)
 })
 

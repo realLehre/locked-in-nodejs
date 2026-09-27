@@ -13,7 +13,8 @@ const JobSchema = new mongoose.Schema({
                 return val.trim() !== ''
             },
             message: 'Job title can not be empty'
-        }
+        },
+        unique: true
     },
     description: {
         type: String,
@@ -27,10 +28,16 @@ const JobSchema = new mongoose.Schema({
     },
     status: {
         type: String,
+        enum: ['PENDING', 'INTERVIEWING', 'CLOSED', 'FILLED'],
         default: 'PENDING',
-        required: true
+        required: true,
+    },
+    createdBy: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+        required: [true, 'User is required']
     }
-})
+}, {timestamps: true})
 
 const Jobs = mongoose.model('Jobs', JobSchema);
 

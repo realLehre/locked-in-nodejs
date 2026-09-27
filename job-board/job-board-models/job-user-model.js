@@ -24,7 +24,11 @@ UserSchema.pre('save', async function() {
 })
 
 UserSchema.methods.genJWT = function () {
-    return jwt.sign({name: this.name, userId: this._id}, process.env.JWT_SECRET, {expiresIn: '7d'})
+    return jwt.sign({name: this.name, userId: this._id}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES})
+}
+
+UserSchema.methods.genAccessToken = function () {
+    return jwt.sign({name: this.name, userId: this._id}, process.env.JWT_REFRESH_SECRET, {expiresIn: process.env.JWT_REFRESH_EXPIRES})
 }
 
 UserSchema.methods.checkPassword = function(loginPassword) {

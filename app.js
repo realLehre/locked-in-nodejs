@@ -8,11 +8,12 @@ import notFound from "./task-manager/taskMiddlewares/task-route-not-found.js";
 import './task-manager/taskDb/connection.js'
 import connectToDb from "./task-manager/taskDb/connection.js";
 import errorHandler from "./utils/error-handler.js";
+import jobAuthMiddleware from "./job-board/job-middlewares/job-auth-middleware.js";
 
 const app = express()
 app.use(express.json());
 
-app.use('/api/v1/jobs', jobRoutes)
+app.use('/api/v1/jobs', jobAuthMiddleware, jobRoutes)
 app.use('/api/v1/users', userRoutes)
 app.use('/api/v1/auth', authRoutes)
 app.use(notFound)

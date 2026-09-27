@@ -11,9 +11,8 @@ const jobAuthMiddleware = async (req, res, next) => {
     const token = authHeader?.split(' ')[1];
 
     try {
-        const user = jwt.verify(token, process.env.JWT_SECRET)
-        req.user = (await getSingleUser(user.userId))
-        console.log(req.user)
+        const {name, userId} = jwt.verify(token, process.env.JWT_SECRET)
+        req.user = {name, userId}
         next()
     } catch (error) {
         throw new Unauthorised('Unauthorized!')
