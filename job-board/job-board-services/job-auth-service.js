@@ -10,7 +10,14 @@ const login = async (email) => {
     return user;
 }
 
+const changePassword = async (password, email) => {
+    const user = await User.findOne({email});
+    const hashedPassword = await user.hashPassword(password)
+    return User.findOneAndUpdate({email}, {password: hashedPassword})
+}
+
 export {
     register,
-    login
+    login,
+    changePassword
 }

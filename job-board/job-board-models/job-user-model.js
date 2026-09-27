@@ -35,6 +35,11 @@ UserSchema.methods.checkPassword = function(loginPassword) {
     return bcrypt.compare(loginPassword, this.password);
 }
 
+UserSchema.methods.hashPassword = async function (password) {
+    const salt = await bcrypt.genSalt(10);
+    return bcrypt.hash(password, salt)
+}
+
 const User = mongoose.model('User', UserSchema)
 
 export default User

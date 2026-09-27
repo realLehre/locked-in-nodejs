@@ -11,7 +11,8 @@ import NotFound from "../../errors/not-found.js";
 import BadRequest from "../../errors/bad-request.js";
 
 const getJobs = asyncWrapper(async (req, res) => {
-    const jobs = await getJobsService()
+    const {userId} = req.user;
+    const jobs = await getJobsService(userId)
     success(res, jobs)
 })
 
@@ -42,8 +43,9 @@ const updateJob = asyncWrapper(async (req, res) => {
 })
 
 const deleteJob = asyncWrapper(async (req, res) => {
-    const id = req.params.id;
-    const job = await deleteJobService(id)
+    const jobId = req.params.id;
+    const userId = req.user.userId
+    const job = await deleteJobService(jobId, userId)
 
     success(res, job);
 })

@@ -2,8 +2,10 @@ import Jobs from "../job-board-models/jobs-model.js";
 import BadRequest from "../../errors/bad-request.js";
 import NotFound from "../../errors/not-found.js";
 
-const getJobsService = async () => {
-    return await Jobs.find()
+const getJobsService = async (userId) => {
+    return await Jobs.find(
+        {createdBy: userId}
+    )
 }
 
 const createJobService = async (data) => {
@@ -14,8 +16,8 @@ const findJobService = async (id) => {
     return await Jobs.findById(id);
 }
 
-const deleteJobService = async (id) => {
-    const job  = await Jobs.deleteOne({_id: id});
+const deleteJobService = async (jobId, userId) => {
+    const job  = await Jobs.deleteOne({_id: jobId, createdBy: userId});
     if(!job) {
         throw new NotFound('Job not found')
     }
