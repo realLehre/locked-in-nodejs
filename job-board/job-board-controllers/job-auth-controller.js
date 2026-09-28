@@ -1,17 +1,14 @@
 import asyncWrapper from "../../utils/asyncHandler.js";
-import bcrypt from 'bcryptjs'
 
 import {success} from "../../utils/response-body.js";
-import NotFound from "../../errors/not-found.js";
 import {register, login, changePassword} from "../job-board-services/job-auth-service.js";
 import BadRequest from "../../errors/bad-request.js";
 import Unauthorised from "../../errors/unauthorised.js";
 import {StatusCodes} from "http-status-codes";
-import sendEmail from "../job-board-services/email-service.js";
 import {OtpTypes} from "../../utils/otp-types.js";
 import {createAndSendOtp} from "../job-board-services/otp-service.js";
 import User from "../job-board-models/job-user-model.js";
-import {genPasswordToken, verifyPasswordToken} from "../../utils/password-jwt.js";
+import {verifyPasswordToken} from "../../utils/password-jwt.js";
 
 const registerUser = asyncWrapper(async (req, res) => {
     const user  = await register(req.body)

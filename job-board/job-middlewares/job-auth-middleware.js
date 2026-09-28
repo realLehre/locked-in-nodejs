@@ -1,6 +1,5 @@
 import Unauthorised from "../../errors/unauthorised.js";
 import jwt from "jsonwebtoken";
-import {getSingleUser} from "../job-board-services/job-users-service.js";
 
 const jobAuthMiddleware = async (req, res, next) => {
     const authHeader = req.headers?.authorization
