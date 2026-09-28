@@ -2,7 +2,7 @@ import { BrevoClient } from '@getbrevo/brevo';
 
 const brevo = new BrevoClient({ apiKey: process.env.EMAIL_API_KEY });
 
-const sendEmail = async ({email, purpose, otp, name}) => {
+const sendEmail = async ({email, purpose, otp}) => {
     let subject;
     let message;
 
@@ -30,7 +30,7 @@ const sendEmail = async ({email, purpose, otp, name}) => {
         subject: 'Hello from Brevo!',
         htmlContent: `<html><h2>Verification Code</h2><p>${message}</p><p>This code expires in 10 minutes.</p></html>`,
         sender: { name: 'Toreto from Job App', email: process.env.V_EMAIL },
-        to: [{ email, name }],
+        to: [{ email }],
     });
 }
 

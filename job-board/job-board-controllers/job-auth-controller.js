@@ -9,7 +9,7 @@ import Unauthorised from "../../errors/unauthorised.js";
 import {StatusCodes} from "http-status-codes";
 import sendEmail from "../job-board-services/email-service.js";
 import {OtpTypes} from "../../utils/otp-types.js";
-import {createOtp} from "../job-board-services/otp-service.js";
+import {createAndSendOtp} from "../job-board-services/otp-service.js";
 
 const registerUser = asyncWrapper(async (req, res) => {
     const user  = await register(req.body)
@@ -45,17 +45,14 @@ const loginUser = asyncWrapper(async (req, res) => {
 
     const purpose = OtpTypes.LOGIN;
 
-   await createOtp({email, userId: user._id, purpose, name: user.name});
+   await createAndSendOtp({email, userId: user._id, purpose});
 
-    const token = user.genJWT();
-    const refreshToken = user.genAccessToken();
     const userData = {
         user: {
             name: user.name,
-            email: user.email
+            email: user.email,
+            userId: user._id
         },
-        token,
-        refreshToken
     }
 
     success(res, userData, StatusCodes.OK)
@@ -76,7 +73,7 @@ const updatePassword = asyncWrapper(async (req, res) => {
 })
 
 export {
-   registerUser,
+    registerUser,
     loginUser,
     updatePassword
 }
