@@ -4,6 +4,8 @@ import {resendOtp, verifyOtp} from "../job-board-services/otp-service.js";
 import TaskError from "../../utils/error-class.js";
 import User from "../job-board-models/job-user-model.js";
 import {success} from "../../utils/response-body.js";
+import {OtpTypes} from "../../utils/otp-types.js";
+import {genPasswordToken} from "../../utils/password-jwt.js";
 
 const verify = asyncWrapper(async (req,res) => {
     const {userId, otp, purpose} = req.body;
@@ -15,14 +17,24 @@ const verify = asyncWrapper(async (req,res) => {
     if(!isVerified) throw new TaskError('Something went wrong');
 
     const user = await User.findById(userId)
-    const token = user.genJWT();
-    const refreshToken = await user.genAccessToken()
+    let userData;
 
-    const userData = {
-        status: 'Success',
-        token,
-        refreshToken,
-        purpose
+    if(purpose === OtpTypes.LOGIN) {
+        const token = user.genJWT();
+        const refreshToken = await user.genAccessToken()
+
+        userData = {
+            status: 'Success',
+            token,
+            refreshToken,
+            purpose
+        }
+    } else {
+        const passwordToken = genPasswordToken();
+        userData = {
+            status: 'Success',
+            token: passwordToken
+        }
     }
 
     success(res, userData)
